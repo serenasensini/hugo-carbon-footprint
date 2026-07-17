@@ -1,0 +1,17 @@
+# Node
+node_modules/
+
+# Hugo build output
+public/
+resources/_gen/
+
+# Environment
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/

@@ -1,0 +1,51 @@
+{{/*
+  carbon-badge.html — hugo-carbon-footprint
+  https://github.com/serenasensini/hugo-carbon-footprint
+
+  Displays an estimated carbon footprint for the current page.
+  Data is read from `data/carbon.json`, updated by running:
+    node scripts/carbon.js
+
+  USAGE in your template (footer, base layout, etc.):
+    {{ partial "carbon-badge.html" . }}
+
+  This partial does not include built-in styles: use the `.carbon-badge`
+  CSS class to customize its appearance in your theme.
+
+  OPTIONAL PARAMETERS (pass as a dict):
+    {{ partial "carbon-badge.html" (dict "site" site "showRating" true "showLink" true) }}
+
+    showRating  – displays the Digital Carbon Rating (default: true)
+    showLink    – displays the websitecarbon.com link  (default: true)
+*/}}
+
+{{ $showRating := true }}
+{{ $showLink   := true }}
+
+{{ if reflect.IsMap . }}
+  {{ with .showRating }}{{ $showRating = . }}{{ end }}
+  {{ with .showLink   }}{{ $showLink   = . }}{{ end }}
+{{ end }}
+
+{{/* Hugo >= 0.156: use hugo.Data; fallback to site.Data for older versions */}}
+{{ $carbon := index hugo.Data "carbon" | default (index site.Data "carbon") }}
+{{ with $carbon }}
+  {{ if .gco2e }}
+  <div class="carbon-badge-wrapper" style="display:flex;justify-content:center;align-items:center;padding:0.6rem 1rem;text-align:center;">
+    <p class="carbon-badge" style="margin:0;" aria-label="Carbon footprint of this site">
+      🌱 This page emits about
+      <strong>{{ printf "%.3f" .gco2e }}g</strong> of CO₂ per visit
+      {{ if $showRating }}
+        — rating: <strong>{{ .rating }}</strong>
+      {{ end }}
+      — cleaner than
+      <strong>{{ printf "%.0f" (mul .cleanerThan 100.0) }}%</strong> of websites.
+      {{ if $showLink }}
+        <a href="https://www.websitecarbon.com/"
+           target="_blank"
+           rel="noopener noreferrer">Learn more</a>
+      {{ end }}
+    </p>
+  </div>
+  {{ end }}
+{{ end }}

@@ -1,0 +1,22 @@
+{
+  "bytes": 0,
+  "green": false,
+  "gco2e": null,
+  "rating": null,
+  "cleanerThan": null,
+  "statistics": {
+    "adjustedBytes": 0,
+    "energy": 0,
+    "co2": {
+      "grid":      { "grams": 0, "litres": 0 },
+      "renewable": { "grams": 0, "litres": 0 }
+    }
+  },
+  "_meta": {
+    "siteUrl":    null,
+    "green":      false,
+    "bytes":      0,
+    "measuredAt": null
+  },
+  "_note": "Placeholder - run 'node scripts/carbon.js' (or 'npm run carbon') to update with real data."
+}

@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  health-check:
+    name: Node health check
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18, 20, 22]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Print versions
+        run: |
+          node --version
+          npm --version
+
+      - name: Script syntax check
+        run: node --check scripts/carbon.js
+
+      - name: Carbon script smoke run
+        env:
+          CARBON_BYTES: "50000"
+          CARBON_GREEN: "0"
+          CARBON_OUTPUT: "tmp/carbon.json"
+        run: node scripts/carbon.js
+
+      - name: Validate smoke output
+        run: |
+          test -f tmp/carbon.json
+          node -e "const fs=require('fs');const d=JSON.parse(fs.readFileSync('tmp/carbon.json','utf8')); if(typeof d.gco2e!=='number' || !d.rating){process.exit(1)}"

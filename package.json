@@ -1,0 +1,27 @@
+{
+  "name": "hugo-carbon-footprint",
+  "version": "1.0.0",
+  "description": "Hugo Module + Node.js script to measure and display CO₂ footprint in any Hugo site.",
+  "type": "module",
+  "bin": {
+    "hugo-carbon": "./scripts/carbon.js"
+  },
+  "scripts": {
+    "carbon": "node scripts/carbon.js"
+  },
+  "keywords": [
+    "hugo",
+    "carbon",
+    "co2",
+    "footprint",
+    "sustainability",
+    "green-web",
+    "websitecarbon"
+  ],
+  "author": "Serena Sensini",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}
+
