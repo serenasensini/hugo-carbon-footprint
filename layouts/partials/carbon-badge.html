@@ -31,8 +31,8 @@
   {{ with .showLink   }}{{ $showLink   = . }}{{ end }}
 {{ end }}
 
-{{/* Hugo >= 0.156: use hugo.Data; fallback to site.Data for older versions */}}
-{{ $carbon := index hugo.Data "carbon" | default (index site.Data "carbon") }}
+{{/* Carbon data is written to data/carbon.json and read via site.Data */}}
+{{ $carbon := index site.Data "carbon" }}
 {{ with $carbon }}
   {{ if .gco2e }}
   {{ $ctx := dict "gco2e" .gco2e "rating" .rating "cleanerPct" (mul .cleanerThan 100.0) }}
