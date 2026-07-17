@@ -12,6 +12,10 @@
   This partial does not include built-in styles: use the `.carbon-badge`
   CSS class to customize its appearance in your theme.
 
+  All user-facing text is translatable via Hugo's i18n system. Translation
+  files ship with the module under `i18n/` (en, it). Override or add languages
+  by placing your own `i18n/<lang>.toml` in your project.
+
   OPTIONAL PARAMETERS (pass as a dict):
     {{ partial "carbon-badge.html" (dict "site" site "showRating" true "showLink" true) }}
 
@@ -31,19 +35,18 @@
 {{ $carbon := index hugo.Data "carbon" | default (index site.Data "carbon") }}
 {{ with $carbon }}
   {{ if .gco2e }}
+  {{ $ctx := dict "gco2e" .gco2e "rating" .rating "cleanerPct" (mul .cleanerThan 100.0) }}
   <div class="carbon-badge-wrapper" style="display:flex;justify-content:center;align-items:center;padding:0.6rem 1rem;text-align:center;">
-    <p class="carbon-badge" style="margin:0;" aria-label="Carbon footprint of this site">
-      🌱 This page emits about
-      <strong>{{ printf "%.3f" .gco2e }}g</strong> of CO₂ per visit
+    <p class="carbon-badge" style="margin:0;" aria-label="{{ i18n "carbon_aria_label" }}">
+      {{ i18n "carbon_emits" $ctx | safeHTML }}
       {{ if $showRating }}
-        — rating: <strong>{{ .rating }}</strong>
+        {{ i18n "carbon_rating" $ctx | safeHTML }}
       {{ end }}
-      — cleaner than
-      <strong>{{ printf "%.0f" (mul .cleanerThan 100.0) }}%</strong> of websites.
+      {{ i18n "carbon_cleaner" $ctx | safeHTML }}
       {{ if $showLink }}
         <a href="https://www.websitecarbon.com/"
            target="_blank"
-           rel="noopener noreferrer">Learn more</a>
+           rel="noopener noreferrer">{{ i18n "carbon_learn_more" }}</a>
       {{ end }}
     </p>
   </div>

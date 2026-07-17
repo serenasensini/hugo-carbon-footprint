@@ -1,0 +1,17 @@
+# hugo-carbon-footprint — Italian translations
+# Used by layouts/partials/carbon-badge.html via Hugo's `i18n` function.
+
+[carbon_aria_label]
+other = "Impronta di carbonio di questo sito"
+
+[carbon_emits]
+other = "🌱 Questa pagina emette circa <strong>{{ printf \"%.3f\" .gco2e }}g</strong> di CO₂ per visita"
+
+[carbon_rating]
+other = "— valutazione: <strong>{{ .rating }}</strong>"
+
+[carbon_cleaner]
+other = "— più pulita del <strong>{{ printf \"%.0f\" .cleanerPct }}%</strong> dei siti web."
+
+[carbon_learn_more]
+other = "Scopri di più"

@@ -137,6 +137,41 @@ With custom options:
 
 ---
 
+## Internationalization (i18n)
+
+All badge text is translatable via [Hugo's i18n system](https://gohugo.io/functions/lang/translate/). The module ships with:
+
+- `i18n/en.toml` (English, default)
+- `i18n/it.toml` (Italian)
+
+Hugo automatically picks the file matching your site's active language (`defaultContentLanguage` / the current language in a multilingual site).
+
+### Add another language
+
+Create `i18n/<lang>.toml` in **your** project (it takes precedence over the module):
+
+```toml
+# i18n/fr.toml
+[carbon_aria_label]
+other = "Empreinte carbone de ce site"
+
+[carbon_emits]
+other = "🌱 Cette page émet environ <strong>{{ printf \"%.3f\" .gco2e }}g</strong> de CO₂ par visite"
+
+[carbon_rating]
+other = "— note : <strong>{{ .rating }}</strong>"
+
+[carbon_cleaner]
+other = "— plus propre que <strong>{{ printf \"%.0f\" .cleanerPct }}%</strong> des sites web."
+
+[carbon_learn_more]
+other = "En savoir plus"
+```
+
+Available placeholders: `.gco2e`, `.rating`, `.cleanerPct` (already multiplied to 0–100).
+
+---
+
 ## CSS customization
 
 The partial adds the `.carbon-badge` class to the paragraph. Minimal style example:
